@@ -31,35 +31,26 @@ class Board
   end
 
   def make_move(start_pos, current_player_name)
-    #13 = player2, 6 = player1
-    if current_player_name == @name1 && valid_move?(start_pos)
-      pickup = cups[start_pos]
-      cups[start_pos] = []
-      i = 1
-      while !pickup.empty?
-        if (start_pos + i) % 14 == 13
-          i += 1
-        end
-      cups[(start_pos + i) % 14] << pickup.shift
-      i += 1
+    stones = cups[start_pos]
+    cups[start_pos] = []
+
+    cup_idx = start_pos
+
+    until stones.empty?
+      cup_idx += 1
+      cup_idx = 0 if cup_idx > 13
+
+      if cup_idx == 6
+        cups[6] << stones.shift if current_player_name == @name1
+      elsif cup_idx == 13
+        cups[13] << stones.shift if current_player_name == @name2
+      else
+        cups[cup_idx] << stones.shift
       end
-    end
-      
-    if current_player_name == @name2 && valid_move?(start_pos)
-      pickup = cups[start_pos]
-      cups[start_pos] = []
-      i = 1
-      while !pickup.empty?
-        if (start_pos + i) % 14 == 6
-          i += 1
-        end
-      cups[(start_pos + i) % 14] << pickup.shift
-      i += 1
-      end
+
     end
       self.render
-      self.next_turn(i)
-
+      self.next_turn(cup_idx)
   end
 
   def next_turn(ending_cup_idx)
@@ -67,7 +58,7 @@ class Board
     if ending_cup_idx == 6 || ending_cup_idx == 13
       return :prompt
     end
-    if cups[ending_cup_idx].length == 1 
+    if cups[ending_cup_idx].length == 1
       return :switch
     else
       return ending_cup_idx
