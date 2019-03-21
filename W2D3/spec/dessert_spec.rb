@@ -53,13 +53,17 @@ describe Dessert do
     describe "#eat" do
     subject(:dessert) { Dessert.new('chocolate', 50, :chef) }
     
-      context(dessert.eat(1))
+    
       it "subtracts an amount from the quantity" do
+        dessert.eat(1)
         expect(dessert.quantity).to eq(49) 
       end
     
 
-      it "raises an error if the amount is greater than the quantity"
+      it "raises an error if the amount is greater than the quantity" do
+
+        expect{dessert.eat(100)}.to raise_error(RuntimeError)
+      end
     end
 
     describe "#serve" do
