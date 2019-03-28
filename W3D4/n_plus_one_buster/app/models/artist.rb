@@ -16,5 +16,6 @@ class Artist < ApplicationRecord
 
   def better_tracks_query
     # TODO: your code here
+      tracks = self.albums.includes(:tracks)
   end
 end
