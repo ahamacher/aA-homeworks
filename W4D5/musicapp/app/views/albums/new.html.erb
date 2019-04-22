@@ -1,0 +1,28 @@
+<h2>Create an Ablum for: <%= @band.name %></h2>
+
+<form action="<%= albums_url %>" method="POST">
+  <input type="hidden" name="album[band_id]" value="<%= @band.id %>" >
+  <%= auth %>
+  <label>Band Name: 
+    <select name="album[band_id]" required>
+      <% Band.all.each do |band| %>
+        <option value="<%= band.id %>" <%= 'selected' if band.id == @band.id %> ><%= band.name %></option>
+      <% end %>
+    </select>
+  </label>
+  <br>
+
+  <label>Album Title: 
+    <input type="text" name="album[title]" value="">
+  </label>
+  <br>
+  <label>Album Date:
+    <input type="date" name="album[yr]" value="">
+  </label>
+  <br>
+  <label>Live Album?
+    <input type="radio" name="album[live_album]" value="true">Live
+    <input type="radio" name="album[live_album]" value="false" checked>Studio
+  </label>
+  <input type="submit" value="submit">
+</form>

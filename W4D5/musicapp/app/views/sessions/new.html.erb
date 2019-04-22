@@ -1,0 +1,16 @@
+<h5>Login User</h5>
+<br>
+<form action="<%= session_url %>" method="POST">
+<%= auth %>
+<label>E-mail: 
+  <input type="text" name="user[email]" value="">
+</label>
+<br>
+<label>Password
+<input type="password" name="user[password]" id="">
+</label>
+
+<label>
+  <input type="submit" value="Login">
+</label>
+</form>
